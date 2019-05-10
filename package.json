@@ -1,0 +1,8 @@
+{
+  "name": "E25CP1A1",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "mdbootstrap": "^4.7.5"
+  }
+}

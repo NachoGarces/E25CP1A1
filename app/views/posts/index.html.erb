@@ -1,0 +1,87 @@
+<div class="modal" id="modalqlo" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editing Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render 'form', post: @post %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <h1>New Post</h1>
+    <%= form_with model: @post, multipart: true do |form| %>
+      <% if @post.errors.any? %>
+        <div id="error_explanation">
+         <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+          <ul>
+            <% @post.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= form.label :title %>
+        <%= form.text_field :title %>
+      </div>
+
+      <div class="field">
+        <%= form.label :photo %>
+        <%= form.file_field :photo %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>
+    <hr>
+
+    <h1> Search post </h1>
+    <form action="<%= posts_path %>">
+      <input name="search">
+    </form>
+  </div>
+
+  <div class="col-md-9">
+    <h1>Posts</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody id="posts">
+          <%= render @posts %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<script>
+  $("[name=search]").keyup(function (e) { 
+    $.ajax({
+      type: "GET",
+      url: "<%= posts_path %>",
+      data: {search: $(this).val()},
+      dataType: "script"
+    });
+  });
+</script>
